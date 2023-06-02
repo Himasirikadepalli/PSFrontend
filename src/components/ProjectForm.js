@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const ProjectForm = () => {
@@ -10,7 +11,7 @@ const ProjectForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/createProject', {
+      const response = await axios.post('https://localhost:7230/api/createProject', {
         Title: title,
         Description: description,
         Keywords: keywords,
@@ -26,35 +27,33 @@ const ProjectForm = () => {
   return (
     <div>
       <h2>Create Project</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="title">
+          <Form.Label>Title:</Form.Label>
+          <Form.Control
             type="text"
-            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
+        </Form.Group>
+        <Form.Group controlId="description">
+          <Form.Label>Description:</Form.Label>
+          <Form.Control
+            as="textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="keywords">Keywords:</label>
-          <input
+        </Form.Group>
+        <Form.Group controlId="keywords">
+          <Form.Label>Keywords:</Form.Label>
+          <Form.Control
             type="text"
-            id="keywords"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
           />
-        </div>
-        <button type="submit">Create Project</button>
-      </form>
+        </Form.Group>
+        <Button type="submit">Create Project</Button>
+      </Form>
     </div>
   );
 };
