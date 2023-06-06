@@ -15,7 +15,7 @@ function NavBar() {
         <Nav.Link href="#pricing">Pricing</Nav.Link>
         <Nav.Link href="#about">Login</Nav.Link>
         // Login Link aligned to the right
-        {/* <Nav.Link href="#login" >Login</Nav.Link> */}
+        <Nav.Link href="#login" >Login</Nav.Link>
       </Nav>
     </Container>
   </Navbar>
