@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
 import axios from 'axios';
+
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
@@ -9,7 +9,7 @@ const HomePage = () => {
     // Fetch articles data from the backend API
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('https://localhost:7230/api/Auth/homepage'); // Replace with your backend API endpoint
+        const response = await axios.get('https://localhost:7230/api/Home'); // Replace with your backend API endpoint
         setArticles(response.data);
       } catch (error) {
         console.log(error);
@@ -24,13 +24,11 @@ const HomePage = () => {
       <h1>Project Showcase</h1>
       <div className="articles">
         {articles.map((article) => (
-          <Card key={article.id} className="article">
-            <Card.Body>
-              <Card.Title>{article.title}</Card.Title>
-              <Card.Text>{article.authors.join(', ')}</Card.Text>
-              <Card.Text>{article.abstract}</Card.Text>
-            </Card.Body>
-          </Card>
+          <div key={article.id} className="article">
+            <h2>{article.title}</h2>
+            <p>{article.authors.join(', ')}</p>
+            <p>{article.abstract}</p>
+          </div>
         ))}
       </div>
     </div>
