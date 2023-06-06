@@ -22,8 +22,6 @@ function ResultPage({ searchQuery }) {
   }, [searchQuery]);
   
   return (
-   
-  
  <div className="mb-4">
       <h1 className="text-center">Search Results</h1>
       {results.map((result) => (
