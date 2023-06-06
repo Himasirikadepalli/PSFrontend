@@ -1,61 +1,59 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-
-const ProjectForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [keywords, setKeywords] = useState('');
+import {Redirect} from 'react-router-dom';
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [LoggedIn, setLoggedIn] = useState(false);
+  const [InvalidCredentials, setInvalidCredentials] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post('https://localhost:7230/api/createProject', {
-        Title: title,
-        Description: description,
-        Keywords: keywords,
+      const response = await axios.post('https://localhost:7230/api/Auth/login', {
+        UserName: username,
+        Password: password,
       });
 
-      console.log('Project created:', response.data);
-      // Do something with the response if needed
+      console.log('JWT Token:', response.data);
+      // You can store the token in localStorage or a state variable for later use
+      setLoggedIn(false);
     } catch (error) {
-      console.error('Project creation failed:', error);
+      console.error('Login failed:', error);
+      setInvalidCredentials(false);
     }
   };
+  if(LoggedIn){
+    return <Redirect to="/HomePage"/>;
+  }
 
   return (
     <div>
-      <h2>Create Project</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="title">
-          <Form.Label>Title:</Form.Label>
-          <Form.Control
+      <h2>Login</h2>
+      {InvalidCredentials&& <p>InvalidCredentials.Please try again.</p>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-        </Form.Group>
-        <Form.Group controlId="description">
-          <Form.Label>Description:</Form.Label>
-          <Form.Control
-            as="textarea"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        </Form.Group>
-        <Form.Group controlId="keywords">
-          <Form.Label>Keywords:</Form.Label>
-          <Form.Control
-            type="text"
-            value={keywords}
-            onChange={(e) => setKeywords(e.target.value)}
-          />
-        </Form.Group>
-        <Button type="submit">Create Project</Button>
-      </Form>
+        </div>
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 };
 
-export default ProjectForm;
+export default LoginForm;
